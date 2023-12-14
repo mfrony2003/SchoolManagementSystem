@@ -49,7 +49,7 @@ def doLogin(request):
         user=UserModelBackend.authenticate(request,
                     username=request.POST.get('email'),
                     password=request.POST.get('password'),)        
-        print('post')
+        print(user)
     if user is not None:
        print(user)
        login(request,user)
