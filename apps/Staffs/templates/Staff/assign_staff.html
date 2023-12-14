@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+    <div class="content container-fluid">
+       <div class="page-header">
+          <div class="row align-items-center">
+             <div class="col">
+                <h3 class="page-title">Assign Staff</h3>
+                <ul class="breadcrumb">
+                   <li class="breadcrumb-item"><a href="subjects.html">Staff</a></li>
+                   <li class="breadcrumb-item active">Assign Staff</li>
+                </ul>
+             </div>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-sm-12">
+             <div class="card">
+                <div class="card-body">
+                  <form method="post" action="{% url 'assign_staff' %}" enctype="multipart/form-data">
+                     {% csrf_token %}
+                      <div class="row">
+                         <div class="col-12">
+                            <h5 class="form-title"><span>Staff Information</span></h5>
+                         </div>                
+                         <div class="col-12 col-sm-6">                           
+                        <strong>  <label>Select Subject</label></strong>
+                           <ul class="two-col">
+                                  {% for i in subject %}
+                                  
+                                  <li><input type="checkbox"   name="subject_id" value="{{i.id}}">
+                                  <label class="checkbox" for="subject_id">{{i.name}}</label></li>
+                                  {% endfor %}
+                           </ul>
+                        
+                     </div>
+                       
+                       
+                        <div class="col-12 col-sm-6">
+                        <strong> <label>Select Section</label></strong>
+                           <ul class="two-col">                               
+                                   {% for i in section %}
+
+                                   <li><input type="checkbox"   name="section_id" value="{{i.id}}">
+                                    <label class="checkbox" for="section_id">{{i.name}}</label></li>
+                                    
+                                  
+                                   {% endfor %}
+                           </ul>
+                            </div>
+                         <div class="col-12 col-sm-6">
+                           <strong> <label>Select Class</label></strong>
+                            <ul class="two-col">                               
+                              {% for i in studentclass %}
+
+                              <li><input type="checkbox"   name="studentclass_id" value="{{i.id}}">
+                               <label class="checkbox" for="studentclass_id">{{i.name}}</label></li>
+                               
+                             
+                              {% endfor %}
+                      </ul>
+                          
+                         </div>
+                         <div class="col-12 col-sm-6">
+                        <strong> <label>Select Staff</label></strong>
+                        <ul class="two-col">                               
+                                   {% for i in staff %}
+                                   <li><input type="checkbox"   name="staff_id" value="{{i.id}}">
+                                    <label class="checkbox" for="staff_id">{{i.admin.username}}</label></li>
+                                   {% endfor %}
+                                 </ul>
+                         </div>
+                         
+                         <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                         </div>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+
+ {% endblock %}	

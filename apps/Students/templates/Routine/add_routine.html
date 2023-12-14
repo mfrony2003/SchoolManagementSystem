@@ -1,0 +1,146 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h4 class="card-title fw-bold">Class Routine Management</h4>
+                <div class="tools">
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'save_routine' %}" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                <input type="hidden" name="class_id" value="{{ class.pk }}">
+                <div class="container-fluid">
+                    <fieldset>
+                        <legend>Routine Details</legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Section:</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ class.assigned_section.name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                      
+                     
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Class:</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ class.name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Faculty:</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ class.assigned_faculty.admin.first_name }} {{ class.assigned_faculty.admin.last_name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <hr>
+                    <fieldset>                        
+                        <fieldset>
+                            <legend>Routine Details</legend>
+                            <div class="row">                         
+                                 <div class="col-sm-6">
+                                    <label>Class</label>
+                                       <select class="form-control" name="course_id" required>
+                                          <option>Select Subject</option>
+                                           {% for i in course %}
+                                          <option value="{{i.id}}"> 
+                                            {{ i.name  }} 
+                                           </option>
+                                           {% endfor %}
+                                       </select>
+                                 </div>
+                         
+                                 <div class="col-sm-6">
+                                    <label>Day</label>
+                                       <select class="form-control" name="day_id" required>
+                                          <option>Select Day</option>
+                                           {% for i in day %}
+                                          <option value="{{i.id}}"> 
+                                           {{ i.name  }}  
+                                           </option>
+                                           {% endfor %}
+                                       </select>
+                                 </div>
+                            </div>
+                            <div class="clear-fix py-3"></div>
+                            <div class="row">                         
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <label>Start Time</label>
+                                       <input type="text" class="form-control" name="starttime" required>
+                                    </div>
+                                 </div>
+                        
+                                 <div class="col-sm-6">
+                                    <div class="form-group">
+                                       <label>End Time</label>
+                                       <input type="text" class="form-control" name="endtime" required>
+                                    </div>
+                                 </div>
+                           </div>
+                           <div class="clear-fix py-3"></div>
+                           <center>
+                               <button class="btn btn-sm btn-primary rounded-0 bg-gradient"><i class="fa fa-save"></i> Save</button>
+                           </center>
+                        </fieldset>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Routine List</legend>
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <table id="table_id" class="table table-hover table-center mb-0 ">
+                                    
+                                    <colgroup>
+                                        <col width="5%">
+                                        <col width="20%">
+                                        <col width="20%">
+                                        <col width="20%">
+                                        <col width="20%">
+                                        <col width="15%">
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="bg-gradient bg-opacity-50 ">
+                                            <th class="px-2 py-2 text-center">#</th>
+                                            <th class="px-2 py-2 text-center">Course</th>
+                                            <th class="px-2 py-2 text-center">Day</th>
+                                            <th class="px-2 py-2 text-center">Start Time</th>
+                                            <th class="px-2 py-2 text-center">End Time</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for routine in routine %}
+                                        <tr>
+                                            <td >{{ routine.id }}</td>
+                                            <td >{{ routine.course }}</td>
+                                            <td >{{ routine.day }}</td>
+                                            <td >{{ routine.start_time}}</td>
+                                            <td >{{ routine.end_time  }}</td>                                        
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                      
+                    </fieldset>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %} 

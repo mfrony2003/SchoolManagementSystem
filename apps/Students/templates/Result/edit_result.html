@@ -1,0 +1,186 @@
+{% extends 'base/base.html' %} {% block content %}
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h4 class="card-title fw-bold">AddStudent Result Management</h4>
+                <div class="tools">
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'save_result' %}" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                <input type="hidden" name="class_id" value="{{ class.pk }}">
+                <div class="container-fluid">
+                    <fieldset>
+                        <legend>Result Details</legend>
+                        <div class="row">                            
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Student Name:</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ student.admin.first_name }}</p>
+                                        <input type="text" class="form-control" name="student_id" value="{{ student.id }}" hidden>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                      
+                     
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Student Roll:</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ student.student_roll }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Student Class:</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ student.student_class.name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Exam :</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        <p class="m-0 fw-bold">{{ examType.name }}</p>
+                                        <input type="text" class="form-control" name="examType_id" value="{{ examType.id }}" hidden>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">   
+                                <center>                                 
+                                        <button type="submit" media="print"  class="btn btn-primary noprint" onclick="javascript:print();">Print </button>
+                                </center>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </fieldset>
+                    <hr>
+                    <fieldset>                        
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">  
+                                       <legend>Subject</legend>                                           
+                                       </div>
+                                   </div>
+                                   <div class="col-sm-2">
+                                       <div class="form-group"> 
+                                           <legend>C.Test</legend>                                               
+                                          </div>
+                                   </div>
+                            
+                                   <div class="col-sm-2">
+                                       <div class="form-group">   
+                                           <legend>Exam</legend>                                             
+                                          </div>
+                                   </div>
+                            
+                                   <div class="col-sm-2">
+                                    <div class="form-group">   
+                                        <legend>Total</legend>                                             
+                                       </div>
+                                </div>
+                               </div>
+                            {% for i in result %}
+                            <div class="row">
+                                
+                                     <div class="col-sm-">
+                                         <div class="form-group">  
+                                             <input type="text" class="form-control" name="{{i.name}}"  value="{{ i.Course.name}}" readonly>
+                                             <input type="text" class="form-control" name="course_id" value="{{ i.Course.id }}" hidden>
+                                             
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-2">
+                                            <div class="form-group"> 
+                                                <input type="text" class="form-control " name="CTMark"  cname="{{i.Course.replaceSpace}}_markclasstest"  value="{{i.CTMark}}" >
+                                               </div>
+                                        </div>
+                                    
+                                        <div class="col-sm-2">
+                                            <div class="form-group">   
+                                                <input type="text" class="form-control " name="ExamMark" cname="{{i.Course.replaceSpace}}_markexam"  value="{{i.ExamMark}}">
+                                               </div>
+                                        </div>
+                                     
+                                        <div class="col-sm-2">
+                                            <div class="form-group">   
+                                                <input type="text" class="form-control " name="Total" cname="{{i.Course.replaceSpace}}_totalmark"  value="{{i.Total}}" readonly>
+                                               </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="form-group">  
+                                               <div name="{{i.Course.replaceSpace}}_passfail">                                            
+                                                {%  if 'Fail' in i.PassorFail   %}
+                                                    <input type="text" name="PassFail"  class="form-control text-danger" value="Fail" readonly>
+                                                {% else %}
+                                                    <input type="text" name="PassFail"   class="form-control text-success" value="Pass" readonly>
+                                                {% endif %}
+                                               </div>
+                                               </div>
+                                           </div>
+                                    </div>
+                                
+                            {% endfor %}
+                         
+                             
+                       
+                           <div class="clear-fix py-3"></div>
+                           <center>
+                               <button class="btn  btn-primary  noprint"><i class="fa fa-save"></i> Save</button>
+                           </center>
+                        </fieldset>
+                    </fieldset>
+                  
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %} {% block ScriptBlock %}
+<script>
+    function AddTotal(element)
+    {
+            var subject= element.attr('cname').split('_')[0]
+            var totalmark=subject+'_totalmark';        
+            var classtestmark=subject+'_markclasstest';  
+            var exammark=subject+'_markexam';  
+
+           var total= parseFloat( $( "input[cname="+classtestmark+"]" ).val()) + parseFloat( $( "input[cname="+exammark+"]" ).val())            
+           $( "input[cname="+totalmark+"]" ).val(total)
+           var passfailElement= (total >= 33) ? '<input type="text" name="PassFail"   class="form-control text-success" value="Pass" readonly>':
+                                '<input type="text" name="PassFail"  class="form-control text-danger" value="Fail" readonly>';
+           var passFailDiv=subject+'_passfail';  
+           $( "div[name="+passFailDiv+"]" ).html(passfailElement)
+           
+           
+           
+           
+    }
+    $(function() {      
+        $( "input[cname*='_markclasstest']" ).change(function() {            
+            AddTotal($(this));
+        })
+
+        $( "input[cname*='_markexam']" ).change(function() {            
+            AddTotal($(this));
+   
+        })
+
+       
+
+        
+    })
+</script>
+{% endblock ScriptBlock %}
