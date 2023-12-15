@@ -43,6 +43,7 @@ def PROFILE_UPDATE(request):
 
 def Login(request):   
         return render(request,'login/login.html')    
+  
 
 def doLogin(request):
     if request.method == 'POST':

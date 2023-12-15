@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [    
     
       path('login/', Login, name='login'),
+     
       path('doLogin/', doLogin, name='doLogin'),
       path('doLogout/', doLogout, name='doLogout'),
 

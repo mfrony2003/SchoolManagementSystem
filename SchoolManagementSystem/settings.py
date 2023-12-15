@@ -135,8 +135,14 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 # All settings common to all environments
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_URL = '/staticfiles/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+if DEBUG is False:
+    STATIC_URL = '/staticfiles/'
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+
 
 
 # Default primary key field type

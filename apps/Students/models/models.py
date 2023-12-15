@@ -101,10 +101,13 @@ class ClassStudent(models.Model):
 
 class Attendance(models.Model):
     classIns = models.ForeignKey(Class,on_delete=models.DO_NOTHING)
+    staff=models.ForeignKey(Staff,on_delete=models.DO_NOTHING)
+    section=models.ForeignKey(Section,on_delete=models.DO_NOTHING)
     student = models.ForeignKey(Student, on_delete=models.DO_NOTHING)
     attendance_date = models.DateField()
-    type = models.CharField(max_length=250, choices = [('1','Present'),('2','Tardy'),('1','Absent')] )
+    type = models.CharField(max_length=250, choices = [('1','Present'),('2','Late'),('1','Absent')] )
     date_updated = models.DateTimeField(auto_now=True)
+
 
     def __str__(self):
         return self.classIns.name + "  " +self.student.student_code

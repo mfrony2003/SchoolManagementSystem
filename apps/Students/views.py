@@ -1,10 +1,11 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from apps.Students.models.models import ClassRoutine, Day, ExamType, Result, Routine
+from apps.Staffs.models import Staff
+from apps.Students.models.models import ClassRoutine, Day, ExamType, Result, Routine, Section
 from apps.users.models import CustomUser,Course,Session_Year
 from apps.Students.models import Student,Class,ClassStudent,Attendance,Gender
-from datetime import datetime
+from datetime import date, datetime
 from django.contrib import messages
 
 context = {
@@ -196,22 +197,27 @@ def attendance_class(request):
 
 
 @login_required
-def attendance(request,classPK = None, date=None):
+def attendance(request,classPK = None,sectionID=None,staffID=None, selectedDate=None):
     _class = Class.objects.get(id = classPK)
+    _section= Section.objects.get(id = sectionID)
+    _staff= Section.objects.get(id = staffID)
     students = Student.objects.filter(id__in = ClassStudent.objects.filter(classIns = _class).values_list('student')).all()
+   
     context['page_title'] = "Attendance Management"
     context['class'] = _class
-    context['date'] = date
+    context['date'] = selectedDate
+    # context['disableOptions'] = date.today() > selectedDate or selectedDate < date.today()
     att_data = {}
     for student in students:
         att_data[student.id] = {}
         att_data[student.id]['data'] = student
-    if not date is None:
-        date = datetime.strptime(date, '%Y-%m-%d')
-        year = date.strftime('%Y')
-        month = date.strftime('%m')
-        day = date.strftime('%d')
-        attendance = Attendance.objects.filter(attendance_date__year = year, attendance_date__month = month, attendance_date__day = day, classIns = _class).all()
+    if not selectedDate is None:
+        cdate = datetime.strptime(selectedDate, '%Y-%m-%d')
+        year = cdate.strftime('%Y')
+        month = cdate.strftime('%m')
+        day = cdate.strftime('%d')
+        attendance = Attendance.objects.filter(attendance_date__year = year, attendance_date__month = month, attendance_date__day = day, 
+                                               classIns = _class , section=_section ).all()
         for att in attendance:
             att_data[att.student.pk]['type'] = att.type
     
@@ -221,8 +227,7 @@ def attendance(request,classPK = None, date=None):
     return render(request, 'Attendance/attendance_mgt.html',context)
 
 @login_required
-def save_attendance(request):
-    resp = {'status' : 'failed', 'msg':''}
+def save_attendance(request):   
     if request.method == 'POST':
         post = request.POST
         date = datetime.strptime(post['attendance_date'], '%Y-%m-%d')
@@ -230,15 +235,22 @@ def save_attendance(request):
         month = date.strftime('%m')
         day = date.strftime('%d')
         _class = Class.objects.get(id=post['classIns'])
-        Attendance.objects.filter(attendance_date__year = year, attendance_date__month = month, attendance_date__day = day,classIns = _class).delete()
+        _staff = Staff.objects.get(id=post['staffID'])
+        _section = Section.objects.get(id=post['sectionID'])
+        
+        
+        attend=Attendance.objects.filter(attendance_date__year = year, attendance_date__month = month, 
+                                  attendance_date__day = day,classIns = _class, staff=_staff, section=_section )
+        print(attend)
+        attend.delete()
+        
         for student in post.getlist('student[]'):
             type = post['type['+student+']']
             studInstance = Student.objects.get(id = student)
-            att = Attendance(student=studInstance,type = type,classIns = _class,attendance_date=post['attendance_date']).save()
-        resp['status'] = 'success'
-        messages.success(request,"Attendance has been saved successfully.")
-    # return HttpResponse(json.dumps(resp),content_type="application/json")
-    return redirect('attendance_class')
+            att = Attendance(student=studInstance,type = type,classIns = _class,attendance_date=post['attendance_date'],
+                              staff=_staff,section=_section ).save()
+
+    return redirect('attendance-class')
 
 
 
