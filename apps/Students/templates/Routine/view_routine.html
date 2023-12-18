@@ -27,7 +27,7 @@
                             <th class="px-2 py-2 text-center">Faculty</th>
                             <th class="px-2 py-2 text-center">Class Name</th>
                             <th class="px-2 py-2 text-center">Section Name</th>
-                            <th class="px-2 py-2 text-center">Name</th>
+                            <th class="px-2 py-2 text-center">Print</th>
                             <th class="px-2 py-2 text-center">Action</th>
                         </tr>
                     </thead>
@@ -37,11 +37,15 @@
                             <td class="px-2 py-1 align-middle text-center">{{ class.id }}</td>
                             <td class="px-2 py-1 align-middle text-center">{{ class.assigned_faculty.admin.first_name }} {{ class.assigned_faculty.admin.last_name }}</td>
                             <td class="px-2 py-1 align-middle text-center">{{ class.name }}</td>
-                            <td class="px-2 py-1 align-middle text-center">{{ class.assigned_section.name }}</td>
-                            <td class="px-2 py-1 align-middle text-center">{{ class.level }}</td>
+                            <td class="px-2 py-1 align-middle text-center">{{ class.assigned_section.name }}</td>                            
+                            <td class="px-2 py-1 align-middle text-center">
+                                <a class="btn btn-outline-info btn-sm" target="_blank" href="{% url 'printroutine' class.pk %}" title="View">
+                                    <i class="fa fa-list"></i> Print Routine
+                                </a>
+                            </td>
                             <td class="px-2 py-1 align-middle text-center">
                                 <a class="btn btn-outline-info btn-sm" href="{% url 'add_class_routin' class.pk %}" title="View">
-                                    <i class="fa fa-list"></i> Select
+                                    <i class="fa fa-list"></i> Add/Edit
                                 </a>
                             </td>
                         </tr>

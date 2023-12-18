@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+
+<h1>Routine of Class {{ class.name }} </h1>
+<h2>Section : {{ class.assigned_section.name }}</h2>
+<h2>Faculty: {{ class.assigned_faculty.admin.first_name }} {{ class.assigned_faculty.admin.last_name }} </h2>
+
+
+
+
+<br/>
+<table>
+    <thead>
+        <tr>
+                                            <th >#</th>
+                                            <th >Course</th>
+                                            <th >Day</th>
+                                            <th >Start Time</th>
+                                            <th >End Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for routine in routine %}
+                                        <tr>
+                                            <td > {{ forloop.counter }}</td>
+                                            <td >{{ routine.course }}</td>
+                                            <td >{{ routine.day }}</td>
+                                            <td >{{ routine.start_time}}</td>
+                                            <td >{{ routine.end_time  }}</td>                                        
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+</table>
+
+</body>
+</html>
+

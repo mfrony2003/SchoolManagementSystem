@@ -435,3 +435,53 @@ def printAllStudent(request):
       
     result = generate_pdf( "Print/student_list.html", file_object=resp, context=context)
     return result
+
+@login_required
+def printattendance(request,classPK = None,sectionID=None,staffID=None, selectedDate=None):
+    resp = HttpResponse(content_type='application/pdf') 
+    _class = Class.objects.get(id = classPK)
+    _section= Section.objects.get(id = sectionID)
+    _staff= Section.objects.get(id = staffID)
+    students = Student.objects.filter(id__in = ClassStudent.objects.filter(classIns = _class).values_list('student')).all()
+   
+    context['page_title'] = "Attendance Management"
+    context['class'] = _class
+    context['date'] = selectedDate    
+    att_data = {}
+    for student in students:
+        att_data[student.id] = {}
+        att_data[student.id]['data'] = student
+    if not selectedDate is None:
+        cdate = datetime.strptime(selectedDate, '%Y-%m-%d')
+        year = cdate.strftime('%Y')
+        month = cdate.strftime('%m')
+        day = cdate.strftime('%d')
+        attendance = Attendance.objects.filter(attendance_date__year = year, attendance_date__month = month, attendance_date__day = day, 
+                                               classIns = _class , section=_section ).all()
+        for att in attendance:
+            att_data[att.student.pk]['type'] = att.type
+    
+    context['att_data'] = list(att_data.values())
+    context['students'] = students
+
+    result = generate_pdf( "Print/print_attendence.html", file_object=resp, context=context)
+    return result
+
+
+@login_required
+def printroutine(request,classPK = None, date=None):
+    resp = HttpResponse(content_type='application/pdf') 
+    _class = Class.objects.get(id = classPK)
+    _course = Course.objects.all()
+    _day = Day.objects.all()
+    _routine = Routine.objects.filter(id__in = ClassRoutine.objects.filter( classFor=Class.objects.get(id = classPK)).values_list('routine')).all()
+
+    context = {        
+        'class':_class,
+        'course':_course,
+        'day':_day,
+        'routine':_routine
+    }
+   
+    result = generate_pdf( "Print/print_routine.html", file_object=resp, context=context)
+    return result

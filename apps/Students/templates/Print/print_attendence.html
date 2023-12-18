@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+
+<h2>Attendence Sheet Date {{ date }}</h2>
+
+
+<table>
+    
+    
+  <tr>
+    <td>Section :   {{ class.assigned_section.name }}</td>             
+    <td>Class : {{ class.name }}</td>
+  </tr>
+  <tr>
+    <td>Faculty : {{ class.assigned_faculty.admin.first_name }} {{ class.assigned_faculty.admin.last_name }}</td>                                     
+    <td>Date: {% if date %}{{ date }}{% endif %}</td>    
+   
+  </tr>
+  
+</table>
+
+
+<table>
+    <thead>
+        <tr>
+            <th class="text-ceter">SL # </th>
+            <th class="text-ceter">Student Roll</th>
+            <th class="text-ceter">Student Name</th>
+            <th class="text-ceter"> Present</th>
+            <th class="text-ceter"> Late</th>
+            <th class="text-ceter"> Absent</th>          
+        </tr>
+     </thead>
+     {% for student in att_data %} 
+  <tr>
+    <td > {{ forloop.counter }}</td>
+    <td>{{ student.data.student_roll }}</td>
+    <td>{{ student.data.admin.first_name }}  {{ student.data.admin.last_name }}</td>
+    <td >
+        
+          <strong> {% if student.type == '1' %} Yes  {% endif %} </strong>
+        
+    </td>
+    <td >
+        <strong> {% if student.type == '2' %} Yes  {% endif %} </strong>
+        
+    </td>
+    <td >
+        <strong>   {% if student.type == '3' %} Yes  {% endif %} </strong>
+        
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
+

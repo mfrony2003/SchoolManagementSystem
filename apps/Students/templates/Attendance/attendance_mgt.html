@@ -53,6 +53,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-4">
+                                <div class="d-flex w-100">
+                                    <div class="col-auto pe-2 text-muted">Date :</div>
+                                    <div class="col-auto flex-shrink-1 flex-grow-1">
+                                        
+                                        <a  name="attendance_download" target="_blank" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </fieldset>
                     <hr>             
@@ -119,10 +128,18 @@
          $('table td, table th').addClass('px-2 py-1')
        
         $('input[name="attendance_date"]').change(function() {      
-            location.href = "{% url 'attendance-page'  class.pk class.assigned_section.id class.assigned_faculty.id %}/" + $(this).val()
+            newUrl="{% url 'attendance-page'  class.pk class.assigned_section.id class.assigned_faculty.id %}/" + $(this).val()
+            
+            location.href = newUrl        
+        })
+        $('a[name="attendance_download"]').click(function() {     
+            d=window.location.href.split('/')[window.location.href.split('/').length -1]
+            newUrl="{% url 'printattendance'  class.pk class.assigned_section.id class.assigned_faculty.id %}/" + d
+            window.open(newUrl,'_blank');
             
 
         })
+        
     })
        
 </script>

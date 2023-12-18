@@ -28,7 +28,10 @@ urlpatterns = [
     # print
       path('printClassStudent/<int:classID>/<str:examTypeID>',printClassStudent,name='printClassStudent'),
       path('printStudentResult/<str:id>/<str:examTypeid>',printStudentResult,name='printStudentResult'),
-      path('printAllStudent',printAllStudent,name='printAllStudent'),
+      path('printAllStudent',printAllStudent,name='printAllStudent'),      
+      path(r'printattendance/<int:classPK>/<int:sectionID>/<int:staffID>',printattendance,name='printattendance'),
+      path(r'printattendance/<int:classPK>/<int:sectionID>/<int:staffID>/<str:selectedDate>',printattendance,name='printattendance'),
+      path(r'printroutine/<int:classPK>',printroutine,name='printroutine'),
       
       
     
