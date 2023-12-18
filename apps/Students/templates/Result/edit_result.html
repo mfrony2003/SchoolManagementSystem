@@ -55,9 +55,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6">   
-                                <center>                                 
-                                        <button type="submit" media="print"  class="btn btn-primary noprint" onclick="javascript:print();">Print </button>
-                                </center>
+                                <div class="d-flex w-100">                
+                                <a href="{% url 'printStudentResult' student.id examType.id %}" target="_blank" class="btn btn-outline-primary mr-2"><i class="fas fa-download"></i> Download</a>
+                                    
+                            </div>
                                 </div>
                             </div>
                         
@@ -137,7 +138,7 @@
                        
                            <div class="clear-fix py-3"></div>
                            <center>
-                               <button class="btn  btn-primary  noprint" disabled><i class="fa fa-save"></i> Save</button>
+                               <button class="btn  btn-primary  noprint" ><i class="fa fa-save"></i> Save</button>
                            </center>
                         </fieldset>
                     </fieldset>

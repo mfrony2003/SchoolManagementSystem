@@ -1,4 +1,5 @@
 
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.Staffs.models import Staff
@@ -388,4 +389,49 @@ def save_result(request):
             result.save()
     
     return redirect('add_class_result',student_id,examType_id)
+
+from django_xhtml2pdf.utils import generate_pdf
+
+def printClassStudent(request,classID = None,examTypeID=None):
+    resp = HttpResponse(content_type='application/pdf')
+
+    _student = Student.objects.filter(student_class_id = classID) 
+    _examType = ExamType.objects.filter(id = examTypeID).first()
+   
+    context = {
+        'students':_student,
+        'examType':_examType,
+        'classID':classID,
+        'examTypeID':examTypeID
+
+    }    
+    result = generate_pdf('Print/print_Student_By_Class.html', file_object=resp, context=context)
+    return result
                 
+def printStudentResult(request,id = None, examTypeid=None):   
+    resp = HttpResponse(content_type='application/pdf') 
+    _student = Student.objects.filter(id=id).first()
+    _course = Course.objects.all()
+    _examType = ExamType.objects.filter(id = examTypeid).first()
+    _result = Result.objects.filter(Student=_student,ExamType=_examType).all()   
+    context = {        
+        'student':_student,      
+       'course': _course,           
+        'examType':_examType,
+        'result':_result,
+    }
+   
+    result = generate_pdf( "Print/result.html", file_object=resp, context=context)
+    return result
+
+@login_required(login_url='/')
+def printAllStudent(request):
+    resp = HttpResponse(content_type='application/pdf') 
+    students = Student.objects.all()
+
+    context = {
+        'students':students,
+    }
+      
+    result = generate_pdf( "Print/student_list.html", file_object=resp, context=context)
+    return result

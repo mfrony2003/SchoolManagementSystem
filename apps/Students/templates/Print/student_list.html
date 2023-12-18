@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+
+<h2>Student List </h2>
+
+
+
+<table>
+    <thead>
+        <tr>
+           <th>ID</th>
+           <th>Name</th>                               
+           <th>Roll</th>                               
+           <th>Gender</th>                           
+           <th>Session Year</th>
+           <th>Class</th>
+           <th>Section</th>
+           <th>Faculty</th>           
+        </tr>
+     </thead>
+     {% for student in students %}
+  <tr>
+    <td>{{student.id}}</td>             
+    <td>{{student.admin.first_name}}&nbsp;{{student.admin.last_name}}</td>
+    <td>{{student.student_roll}}</td>                                     
+    <td>{{student.gender}}</td>
+    
+    <td>{{student.session_year_id.session_start}} To {{student.session_year_id.session_end}}</td>
+    <td>{{student.student_class.name}}</td>
+    <td>{{student.student_class.assigned_section.name}}  </td>
+    <td>{{student.student_class.assigned_faculty.admin.first_name}} &nbsp;{{student.student_class.assigned_faculty.admin.last_name}} </td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
+

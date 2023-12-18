@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -124,3 +125,15 @@ def DELETE_STAFF(request,admin):
     messages.success(request,'Record Are Successfully Deleted !')
     return redirect('view_staff')
 
+from django_xhtml2pdf.utils import generate_pdf
+@login_required(login_url='/')
+def printAllStaff(request):
+    resp = HttpResponse(content_type='application/pdf') 
+    staff = Staff.objects.all()
+
+    context = {
+        'staffs':staff,
+    }
+      
+    result = generate_pdf( "Print/staff_list.html", file_object=resp, context=context)
+    return result

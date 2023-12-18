@@ -24,6 +24,13 @@ urlpatterns = [
     path(r'VIEW_STUDENT_BY_CLASS/<int:classPK>/<str:id>',VIEW_STUDENT_BY_CLASS,name='VIEW_STUDENT_BY_CLASS'),
     path(r'save_result',save_result,name='save_result'),
     
+
+    # print
+      path('printClassStudent/<int:classID>/<str:examTypeID>',printClassStudent,name='printClassStudent'),
+      path('printStudentResult/<str:id>/<str:examTypeid>',printStudentResult,name='printStudentResult'),
+      path('printAllStudent',printAllStudent,name='printAllStudent'),
+      
+      
     
 
     

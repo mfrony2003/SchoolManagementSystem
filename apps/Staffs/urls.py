@@ -9,6 +9,7 @@ urlpatterns = [
     path('Staff/Edit/<str:id>',EDIT_STAFF,name='edit_staff'),    
     path('Staff/Delete/<str:admin>',DELETE_STAFF,name='delete_staff'),
     path('Staff/Update',UPDATE_STAFF,name='update_staff'),
+    path('printAllStaff',printAllStaff,name='printAllStaff'),
    
     
     

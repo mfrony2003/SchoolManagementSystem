@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+
+<h2>Staffs List </h2>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>                           
+            <th>Gender</th>
+            <th>Address</th>                           
+            <th>Created_at</th>
+            <th>Updated_at</th>
+             
+        </tr>
+     </thead>
+     {% for i in staffs %}
+  <tr>
+    <td>{{i.id}}</td>
+    <td>{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</td>
+    <td>{{i.admin.email}}</td>
+    <td>{{i.gender}}</td>
+    <td>{{i.address}}</td>                           
+    <td>{{i.created_at}}</td>
+    <td>{{i.updated_at}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
+

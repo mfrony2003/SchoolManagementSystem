@@ -1,21 +1,12 @@
-{% extends 'base/base.html' %}
-{% block content %}
-{% load static %}
 
 <div class="content container-fluid">
    <div class="page-header">
       <div class="row align-items-center">
          <div class="col">
-            <h3 class="page-title">Students</h3>
-            <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-               <li class="breadcrumb-item active">Students</li>
-            </ul>
-         </div>
-         
+            <h3 class="page-title">Students For Class </h3>            
+         </div>       
       </div>
-   </div>
-   {% include 'common/messages.html' %}
+   </div>   
    <div class="row">
       <div class="col-sm-12">
          <div class="card card-table">
@@ -25,14 +16,11 @@
                      <thead>
                         <tr>
                            <th>ID</th>
-                           <th>Name</th>
-                           <th>Email</th>                           
-                           <th>Gender</th>                           
-                           <th>Session Year</th>
+                           <th>Name</th>                           
+                           <th>Gender</th>                                                     
                            <th>Class</th>
                            <th>Section</th>
-                           <th>Faculty</th>
-                           <th class="text-right">{{examType.name}}</th>
+                           <th>Faculty</th>                           
                         </tr>
                      </thead>
                      <tbody>
@@ -48,16 +36,10 @@
                            </td>
                            <td>{{student.admin.email}}</td>                           
                            <td>{{student.gender}}</td>
-                           
-                           <td>{{student.session_year_id.session_start}} To {{student.session_year_id.session_end}}</td>
                            <td>{{student.student_class.name}}</td>
                            <td>{{student.student_class.assigned_section.name}}  </td>
                            <td>{{student.student_class.assigned_faculty.admin.first_name}} &nbsp;{{student.student_class.assigned_faculty.admin.last_name}} </td>
-                           <td class="px-2 py-1 align-middle text-center">
-                              <a class="btn btn-outline-info btn-sm" href="{% url 'add_class_result' student.id examType.id %}" title="View">
-                                  <i class="fa fa-list"></i> Result
-                              </a>
-                          </td>
+                           
                            
                         </tr>
                         {% endfor %}
@@ -69,4 +51,3 @@
       </div>
    </div>
 </div>
-{% endblock %}
