@@ -34,7 +34,7 @@
                            <th>Gender</th>
                            <th>Address</th>                           
                            <th>Created_at</th>
-                           <th>updated_at</th>
+                         
                            <th class="text-right">Action</th>
                         </tr>
                      </thead>
@@ -44,16 +44,17 @@
                            <td>{{i.id}}</td>
                            <td>
                               <h2 class="table-avatar">
-                             
-                                 <a href="staff-details.html">{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</a>
+                                 <a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src= "{% static  i.admin.profile_pic %}" alt="User Image"></a>
+                                 <a >{{i.admin.first_name}}&nbsp;{{i.admin.last_name}}</a>
                               </h2>
                            </td>
+                        
                            <td>{{i.admin.email}}</td>
                            
                            <td>{{i.gender}}</td>
                            <td>{{i.address}}</td>                           
                            <td>{{i.created_at}}</td>
-                           <td>{{i.updated_at}}</td>
+                           
                            <td class="text-right">
                               
 <div class="actions">

@@ -27,9 +27,9 @@
                   <table id="table_id" class="table table-hover table-center mb-0 ">
                      <thead>
                         <tr>
-                           <th>ID</th>
-                           <th>Name</th>
-                           <th>Email</th>                           
+                          
+                           <th>Name</th>   
+                           <th>Roll</th>                                                                          
                            <th>Gender</th>                           
                            <th>Session Year</th>
                            <th>Class</th>
@@ -40,16 +40,16 @@
                      </thead>
                      <tbody>
                         {% for student in students %}
-                        <tr>
+                        <tr>                           
                            
-                           <td>{{student.id}}</td>                       
+                         
                            <td>
                               <h2 class="table-avatar">
-                             
+                                 <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src= "{% static  student.admin.profile_pic %}"alt="User Image"></a>
                                  <a >{{student.admin.first_name}}&nbsp;{{student.admin.last_name}}</a>
                               </h2>
                            </td>
-                           <td>{{student.admin.email}}</td>                           
+                           <td>{{student.student_roll}}</td>            
                            <td>{{student.gender}}</td>
                            
                            <td>{{student.session_year_id.session_start}} To {{student.session_year_id.session_end}}</td>
