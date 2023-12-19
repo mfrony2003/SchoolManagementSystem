@@ -201,9 +201,9 @@ def attendance_class(request):
 def attendance(request,classPK = None,sectionID=None,staffID=None, selectedDate=None):
     _class = Class.objects.get(id = classPK)
     _section= Section.objects.get(id = sectionID)
-    _staff= Section.objects.get(id = staffID)
+    _staff= Staff.objects.get(id = staffID)
     students = Student.objects.filter(id__in = ClassStudent.objects.filter(classIns = _class).values_list('student')).all()
-   
+    print(students)
     context['page_title'] = "Attendance Management"
     context['class'] = _class
     context['date'] = selectedDate
