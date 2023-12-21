@@ -57,13 +57,17 @@
                                  </div>
 
                                <div class="col-sm-11">
-                                    <label>Gender</label>
-                                       <select class="form-control" name="gender" >
-                                          <option>Select Gender</option>
-                                          <option value="Female">Female</option>
-                                          <option value="Male">Male</option>
-                                          <option value="Others">Others</option>
-                                       </select>
+                                    <label>Gender</label>                                    
+                                    <select class="form-control" name="gender_id" required>
+                                       <option>Select Gender</option>
+                                       {% for i in gender %}
+                                       {% if current_gender == i.id %}
+                                       <option value="{{i.id}}" selected>{{i.name}}</option>
+                                        {% else %}
+                                       <option value="{{i.id}}" >{{i.name}}</option>
+                                       {% endif %}
+                                        {% endfor %}                      
+                                    </select> 
                                  </div>
                                <br>
                                

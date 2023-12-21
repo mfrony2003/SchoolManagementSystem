@@ -56,13 +56,13 @@
                   </div>
 
                 <div class="col-sm-11">
-                     <label>Gender</label>
-                        <select class="form-control" name="gender" required>
-                           <option>Select Gender</option>
-                           <option value="Female">Female</option>
-                           <option value="Male">Male</option>
-                           <option value="Others">Others</option>
-                        </select>
+                  <label>Gender</label>
+                  <select class="form-control" name="gender_id" required>
+                     <option>Select Gender</option>
+                     {% for i in gender %}
+                     <option value="{{i.id}}">{{i.name}}</option>
+                      {% endfor %}                      
+                  </select>
                   </div>          
          
                 <br>

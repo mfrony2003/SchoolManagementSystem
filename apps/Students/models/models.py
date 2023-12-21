@@ -3,38 +3,12 @@ from django.db import models
 from apps.Staffs.models import Staff
 
 from apps.users.models import CustomUser,Session_Year
-from apps.users.models.models import Course
+from apps.users.models.models import Course, Gender, Section
 
 # Create your models here.
 
 
-class Subject(models.Model):
-    name = models.CharField(max_length=200)   
-    active= models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.name
-
-
-class Gender(models.Model):
-    name = models.CharField(max_length=200)   
-    active= models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
-    
-class Section(models.Model):
-    name = models.CharField(max_length=200)   
-    active= models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name 
     
 class Class(models.Model):
     assigned_faculty = models.ForeignKey(Staff, on_delete=models.DO_NOTHING)

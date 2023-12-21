@@ -7,14 +7,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from apps.Staffs.models import  Staff
+from apps.Students.models.models import Class
+
 from apps.users.models import CustomUser
 
 
 from django.contrib import messages
 
+from apps.users.models.models import Gender
+
 
 @login_required(login_url='/')
 def ADD_STAFF(request):    
+    gender=Gender.objects.all()
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
@@ -56,23 +61,37 @@ def ADD_STAFF(request):
 
 
 
-    return render(request,'Staff/add_staff.html')
+    context = {        
+        'gender':gender,
+    }
+
+    return render(request,'Staff/add_staff.html',context)
 
 @login_required(login_url='/')
 def VIEW_STAFF(request):
     staff = Staff.objects.all()
+    student_class=Class.objects.all()
+    gender=Gender.objects.all()
 
     context = {
         'staff':staff,
+        'student_class':student_class,
+        'gender':gender,
     }
+    
     return render(request,'Staff/view_staff.html',context)
 
+ 
 @login_required(login_url='/')
 def EDIT_STAFF(request,id):
     staff = Staff.objects.filter(id = id)    
-
+    gender=Gender.objects.all()
+    current_gender=staff.first().gender_id
     context = {
         'staff':staff,
+        'gender':gender,
+        'current_gender':current_gender,
+
         
     }
     return render(request,'Staff/edit_staff.html',context)

@@ -19,6 +19,52 @@
       </div>
    </div>
    {% include 'common/messages.html' %}
+
+  
+      
+          <legend>Student Search</legend>
+          <div class="row">       
+        
+       
+            <div class="col-sm-6">
+               <div class="card card-table">
+                  <div class="card-body">
+                     <select class="form-control" name="class_id" required>
+                        <option>Select Class</option>
+                         {% for i in student_class %}
+                         {% if current_class == i.id %}
+                         <option value="{{i.id}}" selected> Class -  {{ i.name  }}   Section -   {{ i.assigned_section.name }} - Faculty- {{ i.assigned_faculty.admin.first_name}}</option>
+                         {% else %}
+                         <option value="{{i.id}}" > Class -  {{ i.name  }}   Section -   {{ i.assigned_section.name }} - Faculty- {{ i.assigned_faculty.admin.first_name}}</option>
+                         {% endif %}
+                         {% endfor %}
+                     </select>
+              </div>
+      
+               </div>
+            </div>
+            <div class="col-sm-6">
+               <div class="card card-table">
+                  <div class="card-body">
+            <select class="form-control" name="gender_id" required>
+               <option>Select Gender</option>
+               {% for i in gender %}               
+                
+               <option value="{{i.id}}" >{{i.name}}</option>
+               
+                {% endfor %}                      
+            </select>
+                  </div>
+               </div>
+          </div>
+         </div>
+         <div class="row d-flex justify-content-center" >
+            
+         <button class="btn btn-sm btn-primary rounded-0 bg-gradient mb-3" ><i class="fa fa-save"></i> Search</button>
+      
+      
+      </div>
+ 
    <div class="row">
       <div class="col-sm-12">
          <div class="card card-table">

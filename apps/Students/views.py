@@ -89,9 +89,12 @@ def ADD_STUDENT(request):
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
     students = Student.objects.all()
-
+    student_class=Class.objects.all()
+    gender=Gender.objects.all()
     context = {
         'students':students,
+        'student_class':student_class,
+        'gender':gender,
     }
     return render(request,'Student/view_student.html',context)
 
@@ -175,9 +178,9 @@ def UPDATE_STUDENT(request):
 
 @login_required(login_url='/')
 def DELETE_STUDENT(request,admin):
-    student = CustomUser.objects.get(id = admin)
-    student.delete()
-    messages.success(request,'Record Are Successfully Deleted !')
+    # student = CustomUser.objects.get(id = admin)
+    # student.delete()
+    messages.success(request,'Record  Successfully Deleted !')
     return redirect('view_student')
 
 
