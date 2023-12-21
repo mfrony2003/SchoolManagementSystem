@@ -139,9 +139,11 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 if DEBUG is False:
     STATIC_URL = '/staticfiles/'
     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+    MEDIA_ROOT = os.path.join(BASE_DIR,'apps\SchoolManagementSystemModules\static')
 else:
     STATIC_URL = '/static/'
     STATIC_ROOT = os.path.join(BASE_DIR,'static')
+    MEDIA_ROOT = os.path.join(BASE_DIR,'apps\SchoolManagementSystemModules\static')
 
 
 

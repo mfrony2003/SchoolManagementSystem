@@ -2086,10 +2086,7 @@ footer p {
 .noti-time {
     margin: 0;
 }
-.repeat {
-	background-image: url("/static/img/headerbanner.jpg");
-	background-repeat: repeat-y;
-  }
+
 
 /*-----------------
 	14. Dashboard
