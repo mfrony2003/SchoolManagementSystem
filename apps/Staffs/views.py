@@ -43,7 +43,7 @@ def ADD_STAFF(request):
                 username = username,
                 email = email,
                 profile_pic = profile_pic,
-                user_type = 3
+                user_type = 2
             )
             user.set_password(password)
             user.save()

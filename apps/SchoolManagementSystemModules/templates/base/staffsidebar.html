@@ -1,0 +1,34 @@
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-inner slimscroll">
+       <div id="sidebar-menu" class="sidebar-menu">
+          <ul>
+             <li class="menu-title">
+                <span>Main Menu</span>
+             </li>
+             <li>
+               <a href="{% url 'admindashboard' %}"><i class="fas fa-holly-berry"></i> <span>Staff Dashboard</span></a>
+            </li>
+    
+            <li class="submenu">
+               <a href="#"><i class="fas fa-user-graduate"></i> <span> My Students</span> <span class="menu-arrow"></span></a>
+               <ul>                  
+                  <li><a href="{% url 'view_student' %}">View Student</a></li>
+               </ul>
+            </li>	            
+             
+            <li>
+               
+               <a  href="{% url 'attendance-class' %}"><i class="fas fa-book-reader"></i> <span>My Students Attendence</span></a>
+            </li>
+            <li>
+               <a href="{% url 'class_routin' %}"><i class="fas fa-book-reader"></i> <span>My Students Routine</span></a>
+            </li>
+            <li>
+               <a href="{% url 'student_result' %}"><i class="fas fa-book-reader"></i> <span>My Students Result</span></a>
+               
+            </li>
+            
+          </ul>
+       </div>
+    </div>
+ </div>

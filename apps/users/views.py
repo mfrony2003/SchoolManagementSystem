@@ -57,8 +57,8 @@ def doLogin(request):
        user_type=user.user_type
        
        if user_type=='1':return redirect('admindashboard')
-       elif user_type=='2':return redirect('admindashboard')
-       elif user_type=='3':return redirect('admindashboard')
+       elif user_type=='2':return redirect('staffdashboard')
+       elif user_type=='3':return redirect('studentdashboard')
        
        else:
         messages.error(request,'Invalid Credentials')
