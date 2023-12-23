@@ -20,7 +20,6 @@
    </div>
    {% include 'common/messages.html' %}
 
-  
       
           <legend>Student Search</legend>
           <div class="row">       
@@ -29,16 +28,7 @@
             <div class="col-sm-6">
                <div class="card card-table">
                   <div class="card-body">
-                     <select class="form-control" name="class_id" required>
-                        <option>Select Class</option>
-                         {% for i in student_class %}
-                         {% if current_class == i.id %}
-                         <option value="{{i.id}}" selected> Class -  {{ i.name  }}   Section -   {{ i.assigned_section.name }} - Faculty- {{ i.assigned_faculty.admin.first_name}}</option>
-                         {% else %}
-                         <option value="{{i.id}}" > Class -  {{ i.name  }}   Section -   {{ i.assigned_section.name }} - Faculty- {{ i.assigned_faculty.admin.first_name}}</option>
-                         {% endif %}
-                         {% endfor %}
-                     </select>
+                
               </div>
       
                </div>
@@ -74,9 +64,9 @@
                      <thead>
                         <tr>                          
                            <th>Name</th>   
+                           <th>Email</th>   
                            <th>Roll</th>                                                                          
-                           <th>Gender</th>                           
-                           <th>Session Year</th>
+                           <th>Gender</th>                                                      
                            <th>Class</th>
                            <th>Section</th>
                            <th>Faculty</th>
@@ -85,19 +75,19 @@
                      </thead>
                      <tbody>
                         {% for student in students %}
-                        <tr>                           
-                           
-                         
+                        <tr>                         
+         
                            <td>
                               <h2 class="table-avatar">
                                  <a href="student-details.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src= "{% static  student.admin.profile_pic %}" ></a>
                                  <a >{{student.admin.first_name}}&nbsp;{{student.admin.last_name}}</a>
                               </h2>
                            </td>
+                           <td>{{student.admin.email}}</td>            
                            <td>{{student.student_roll}}</td>            
                            <td>{{student.gender}}</td>
                            
-                           <td>{{student.session_year_id.session_start}} To {{student.session_year_id.session_end}}</td>
+                           
                            <td>{{student.student_class.name}}</td>
                            <td>{{student.student_class.assigned_section.name}}  </td>
                            <td>{{student.student_class.assigned_faculty.admin.first_name}} &nbsp;{{student.student_class.assigned_faculty.admin.last_name}} </td>

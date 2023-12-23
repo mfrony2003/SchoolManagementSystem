@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from apps.Staffs.models import  Staff
-from apps.Students.models.models import Class
+from apps.Students.models.models import Class, ClassStudent
 
 from apps.users.models import CustomUser
 
@@ -69,13 +69,26 @@ def ADD_STAFF(request):
 
 @login_required(login_url='/')
 def VIEW_STAFF(request):
-    staff = Staff.objects.all()
-    student_class=Class.objects.all()
+
+    if request.user.user_type == '1':        
+        staff = Staff.objects.all()
+        classIds=Class.objects.all()
+        
+    if request.user.user_type == '3':                     
+        classIds=ClassStudent.objects.filter(
+                student__admin__id = request.user.id)
+        staffClass=Class.objects.filter(
+                id__in = classIds).values_list('assigned_faculty').all()
+        staff = Staff.objects.filter(
+                id__in =staffClass).all()    
+            
+        
+    
     gender=Gender.objects.all()
 
     context = {
         'staff':staff,
-        'student_class':student_class,
+        'student_class':classIds,
         'gender':gender,
     }
     

@@ -88,8 +88,21 @@ def ADD_STUDENT(request):
 
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
-    students = Student.objects.all()
-    student_class=Class.objects.all()
+      
+    if request.user.user_type == '1':        
+        student_class=Class.objects.all()
+        students = Student.objects.all()
+        
+    if request.user.user_type == '2':                     
+        student_class=Class.objects.get(
+                assigned_faculty__admin__id = request.user.id)
+        students = Student.objects.filter(
+                id__in = ClassStudent.objects.filter(
+                classIns = student_class).values_list('student')).all()
+
+    
+
+
     gender=Gender.objects.all()
     context = {
         'students':students,
@@ -189,10 +202,19 @@ def DELETE_STUDENT(request,admin):
 def attendance_class(request):
     
     if request.user.user_type == '1':
-        classes = Class.objects.all()
+            classes = Class.objects.all()
         
-    else:
-        classes = Class.objects.filter(assigned_faculty = request.user.id).all()
+    if request.user.user_type == '2': 
+            classes = Class.objects.filter(assigned_faculty__admin__id = request.user.id).all()
+
+    if request.user.user_type == '3':                     
+        classIds=ClassStudent.objects.filter(
+                student__admin__id = request.user.id)
+        classes=Class.objects.filter(
+                id__in = classIds).all()
+          
+       
+    
         
     context['page_title'] = "Attendance Management"
     context['classes'] = classes
@@ -203,10 +225,11 @@ def attendance_class(request):
 @login_required
 def attendance(request,classPK = None,sectionID=None,staffID=None, selectedDate=None):
     _class = Class.objects.get(id = classPK)
-    _section= Section.objects.get(id = sectionID)
-    _staff= Staff.objects.get(id = staffID)
+    _section= Section.objects.get(id = sectionID)    
     students = Student.objects.filter(id__in = ClassStudent.objects.filter(classIns = _class).values_list('student')).all()
-    print(students)
+    if request.user.user_type == '3': 
+        students= Student.objects.filter(id__in = ClassStudent.objects.filter(
+                student__admin__id = request.user.id).values_list('student')).all()
     context['page_title'] = "Attendance Management"
     context['class'] = _class
     context['date'] = selectedDate
@@ -263,11 +286,15 @@ def save_attendance(request):
 def class_routine(request):
     
     if request.user.user_type == '1':
-        myClass = Class.objects.all()
-        
-    else:
-        myClass = Class.objects.filter(assigned_faculty = request.user.id).all()
-        
+        myClass = Class.objects.all()        
+    if request.user.user_type == '2':                     
+        myClass = Class.objects.filter(assigned_faculty__admin__id = request.user.id).all()
+    if request.user.user_type == '3':                     
+        classIds=ClassStudent.objects.filter(
+                student__admin__id = request.user.id)
+        myClass=Class.objects.filter(
+                id__in = classIds).all()
+
     context['page_title'] = "Routine Management"
     context['myClass'] = myClass
    
@@ -331,8 +358,14 @@ def student_result(request):
     if request.user.user_type == '1':
         myClass = Class.objects.all()
         
-    else:
-        myClass = Class.objects.filter(assigned_faculty = request.user.id).all()
+    if request.user.user_type == '2':
+        myClass = Class.objects.filter(assigned_faculty__admin__id = request.user.id).all()
+
+    if request.user.user_type == '3':                     
+        classIds=ClassStudent.objects.filter(
+                student__admin__id = request.user.id)
+        myClass=Class.objects.filter(
+                id__in = classIds).all()
 
     examType= ExamType.objects.all()
     context['page_title'] = "Result Management"
@@ -344,8 +377,14 @@ def student_result(request):
 @login_required(login_url='/')
 def VIEW_STUDENT_BY_CLASS(request,classPK = None,id=None):
     _student = Student.objects.filter(student_class_id = classPK) 
+    
+    if request.user.user_type == '3': 
+        _student= Student.objects.filter(id__in = ClassStudent.objects.filter(
+                student__admin__id = request.user.id).values_list('student')).all()
+        
+        
+
     _examType = ExamType.objects.filter(id = id).first()
-   
     context = {
         'students':_student,
         'examType':_examType
@@ -451,10 +490,13 @@ def printAllStudent(request):
 def printattendance(request,classPK = None,sectionID=None,staffID=None, selectedDate=None):
     resp = HttpResponse(content_type='application/pdf') 
     _class = Class.objects.get(id = classPK)
-    _section= Section.objects.get(id = sectionID)
-    _staff= Section.objects.get(id = staffID)
-    students = Student.objects.filter(id__in = ClassStudent.objects.filter(classIns = _class).values_list('student')).all()
-   
+    _section= Section.objects.get(id = sectionID)    
+    students = Student.objects.filter(id__in = ClassStudent.objects.filter(classIns = _class).values_list('student')).all()    
+    if request.user.user_type == '3': 
+        students= Student.objects.filter(id__in = ClassStudent.objects.filter(
+                student__admin__id = request.user.id).values_list('student')).all()
+        
+
     context['page_title'] = "Attendance Management"
     context['class'] = _class
     context['date'] = selectedDate    

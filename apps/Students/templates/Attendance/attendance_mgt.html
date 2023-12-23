@@ -111,9 +111,11 @@
                             </tbody>
                         </table>
                         <div class="clear-fix py-3"></div>
+                        {% if request.user.user_type != '3'%}
                         <center>
                             <button class="btn btn-sm btn-primary rounded-0 bg-gradient" ><i class="fa fa-save"></i> Save</button>
                         </center>
+                        {% endif %}
                     </fieldset>
                     {% endif %}
                 </div>

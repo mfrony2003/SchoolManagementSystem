@@ -44,9 +44,11 @@
                                 </a>
                             </td>
                             <td class="px-2 py-1 align-middle text-center">
+                                {% if request.user.user_type != '3'%}
                                 <a class="btn btn-outline-info btn-sm" href="{% url 'add_class_routin' class.pk %}" title="View">
                                     <i class="fa fa-list"></i> Add/Edit
                                 </a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
