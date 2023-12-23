@@ -20,9 +20,21 @@
    </head>
    <body>
       <div class="main-wrapper">
+
          {% include 'base/header.html' %}
-         {% include 'base/sidebar.html' %}
-         
+         {% if user.user_type == '1' %}          
+                 {% include 'base/sidebar.html'%}   
+         {% endif %}
+
+         {% if user.user_type == '2' %}         
+              {% include 'base/staffsidebar.html'%}   
+         {% endif %}
+
+          {% if user.user_type == '3' %}                   
+               {% include 'base/studentsidebar.html'%}   
+           {% endif %}
+
+          
          <div class="page-wrapper">   
             {% block content %}
 
