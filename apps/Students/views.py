@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.Staffs.models import Staff
-from apps.Students.models.models import ClassRoutine, Day, ExamType, Result, Routine, Section
+from apps.Students.models.models import ClassRoutine, Day, ExamType, Notice, Result, Routine, Section
 from apps.users.models import CustomUser,Course,Session_Year
 from apps.Students.models import Student,Class,ClassStudent,Attendance,Gender
 from datetime import date, datetime
@@ -538,3 +538,15 @@ def printroutine(request,classPK = None, date=None):
    
     result = generate_pdf( "Print/print_routine.html", file_object=resp, context=context)
     return result
+
+
+@login_required(login_url='/')
+def VIEW_NOTICE(request,id=None):
+        notice=Notice.objects.all()    
+        selectedNotice=Notice.objects.filter(id=id)    
+        context = {
+            'notice':notice,
+            'selectedNotice':selectedNotice,
+        
+        }
+        return render(request,'Notice/notice.html',context)

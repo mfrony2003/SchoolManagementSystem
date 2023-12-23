@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %} {% block content %} 
+{% load static %}
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h4 class="card-title fw-bold">Notice Board</h4>
+                <div class="tools">
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <form  method="post"  >                
+                
+                <div class="container-fluid">                    
+                    
+                    <fieldset>
+                        <legend>Notice List</legend>
+                        <table class="table tables-bordered" id="student-list">
+                        
+                            <thead>
+                                <tr>
+                                    <th class="text-ceter">SL # </th>
+                                    <th class="text-ceter">Class </th>
+                                    <th class="text-ceter">Title </th>
+                                    <th class="text-ceter"> Active</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in notice %} 
+                                <tr class="">
+                                       <td class="px-2 py-1"> <a href="{% url 'VIEW_Select_NOTICE' i.id   %}" > {{ forloop.counter }}</a></td> 
+                                    <td class="px-2 py-1">{{ i.classIns.name }}</td>
+                                    <td class="px-2 py-1">{{ i.title }}  </td>
+                                    <td class="px-2 py-1">{{ i.active }}  </td>
+                                    
+                                    </td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="clear-fix py-3"></div>
+                    </fieldset>
+                    
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">                    
+                    
+                {% if selectedNotice %}
+                <fieldset>
+            
+                    <table class="table tables-bordered" id="student-list">
+                    
+                  
+                        <tbody>
+                            {% for i in selectedNotice %} 
+                            <tr class="">
+                                <td class="px-2 py-1"> {{ i.id }}</td>
+                                <td class="px-2 py-1">{{ i.description }}</td>                                
+                                <td class="px-2 py-1">
+                                    <img class="avatar-img rounded-circle img-thumbnail"  src="{% static  i.file %}" ></td>    
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="clear-fix py-3"></div>
+                </fieldset>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}  

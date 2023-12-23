@@ -35,6 +35,9 @@ urlpatterns = [
     path(r'add_class_routin/<int:classPK>',add_class_routine,name='add_class_routin'),
     path(r'save_routine',save_routine,name='save_routine'),
     path(r'delete_routine/<int:classID>/<int:routineID>',delete_routine,name='delete_routine'),
+    #notice
+    path(r'VIEW_NOTICE',VIEW_NOTICE,name='VIEW_NOTICE'),
+    path(r'VIEW_Select_NOTICE/<int:id>',VIEW_NOTICE,name='VIEW_Select_NOTICE'),
     
     
       

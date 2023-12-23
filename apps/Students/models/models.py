@@ -8,7 +8,6 @@ from apps.users.models.models import Course, Gender, Section
 # Create your models here.
 
 
-
     
 class Class(models.Model):
     assigned_faculty = models.ForeignKey(Staff, on_delete=models.DO_NOTHING)
@@ -21,6 +20,19 @@ class Class(models.Model):
     def today(self):
         return  date.today()
  
+ 
+class Notice(models.Model):
+    classIns = models.ForeignKey(Class,on_delete=models.DO_NOTHING)
+    title = models.CharField(max_length=250)
+    description = models.TextField()
+    
+    active= models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    file = models.FileField(upload_to='media/notice',blank=True, null= True)
+    def __str__(self):
+        return self.title + " "  + self.classIns.name 
 
     
 # Create Student Model

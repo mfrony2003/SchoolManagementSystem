@@ -14,3 +14,5 @@ def staffdashboard(request):
         return render(request,'admin/staff.html' ) 
 def studentdashboard(request):   
         return render(request,'admin/student.html' ) 
+def test(request):   
+        return render(request,'admin/test.html' ) 
