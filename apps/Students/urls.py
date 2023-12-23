@@ -16,9 +16,6 @@ urlpatterns = [
     path(r'attendance/<int:classPK>/<int:sectionID>/<int:staffID>',attendance,name='attendance-page'),
     path(r'attendance/<int:classPK>/<int:sectionID>/<int:staffID>/<str:selectedDate>',attendance,name='attendance-page-date'),
     path('save_attendance',save_attendance,name='save-attendance'),
-    path('class_routin',class_routine,name='class_routin'),
-    path(r'add_class_routin/<int:classPK>',add_class_routine,name='add_class_routin'),
-    path(r'save_routine',save_routine,name='save_routine'),
     path(r'student_result',student_result,name='student_result'),
     path(r'Result/add/<str:id>/<str:examTypeid>',add_class_result,name='add_class_result'),
     path(r'VIEW_STUDENT_BY_CLASS/<int:classPK>/<str:id>',VIEW_STUDENT_BY_CLASS,name='VIEW_STUDENT_BY_CLASS'),
@@ -32,6 +29,14 @@ urlpatterns = [
       path(r'printattendance/<int:classPK>/<int:sectionID>/<int:staffID>',printattendance,name='printattendance'),
       path(r'printattendance/<int:classPK>/<int:sectionID>/<int:staffID>/<str:selectedDate>',printattendance,name='printattendance'),
       path(r'printroutine/<int:classPK>',printroutine,name='printroutine'),
+
+  #routine
+    path('class_routin',class_routine,name='class_routin'),
+    path(r'add_class_routin/<int:classPK>',add_class_routine,name='add_class_routin'),
+    path(r'save_routine',save_routine,name='save_routine'),
+    path(r'delete_routine/<int:classID>/<int:routineID>',delete_routine,name='delete_routine'),
+    
+    
       
       
     

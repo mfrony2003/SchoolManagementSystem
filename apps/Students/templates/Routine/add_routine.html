@@ -123,12 +123,35 @@
                                     <tbody>
                                         {% for routine in routine %}
                                         <tr>
-                                            <td >{{ routine.id }}</td>
-                                            <td >{{ routine.course }}</td>
-                                            <td >{{ routine.day }}</td>
-                                            <td >{{ routine.start_time}}</td>
-                                            <td >{{ routine.end_time  }}</td>                                        
+                                            <td  class="px-2 py-1 align-middle text-center">{{ routine.id }}</td>
+                                            <td  class="px-2 py-1 align-middle text-center">{{ routine.course }}</td>
+                                            <td  class="px-2 py-1 align-middle text-center">{{ routine.day }}</td>
+                                            <td  class="px-2 py-1 align-middle text-center">{{ routine.start_time}}</td>
+                                            <td  class="px-2 py-1 align-middle text-center">{{ routine.end_time  }}</td>   
+                                            <td  class="px-2 py-1 align-middle text-center"> <a class="btn btn-sm bg-danger-light" data-toggle="modal" data-target="#exampleModal">      
+                                                <i class="fas fa-trash"></i>
+                                                </a>                                     
+                                            </td>
                                         </tr>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                  Are you Sure ?
+                                                </div>
+                                                <div class="modal-footer">                                                           
+                                                  <a class="btn btn-secondary" data-dismiss="modal" >No</a>
+                                                  <a class="btn btn-primary" href="{% url 'delete_routine' class.id routine.id %}">Yes</a>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
                                         {% endfor %}
                                     </tbody>
                                 </table>

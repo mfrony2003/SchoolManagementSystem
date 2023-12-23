@@ -316,6 +316,14 @@ def save_routine(request):
    
     return redirect('add_class_routin',class_id)
 
+
+@login_required
+def delete_routine(request,classID = None,routineID=None):
+    routine = Routine.objects.get(id = routineID)
+    routine.delete()
+    messages.success(request,'Record  Successfully Deleted !')
+    return redirect('add_class_routin',classID)
+
 #Routine
 @login_required
 def student_result(request):
