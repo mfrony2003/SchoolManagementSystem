@@ -103,6 +103,11 @@ class Day(models.Model):
     def __str__(self):
         return  self.name 
     
+class Month(models.Model):    
+    name = models.CharField(max_length=250)
+    def __str__(self):
+        return  self.name 
+    
 class Routine(models.Model):        
     course = models.ForeignKey(Course,on_delete=models.DO_NOTHING)
     day = models.ForeignKey(Day,on_delete=models.DO_NOTHING)
@@ -146,6 +151,7 @@ class Fee(models.Model):
 class StudentFee(models.Model):
     Fee = models.ForeignKey(Fee,on_delete=models.DO_NOTHING)  
     Student = models.ForeignKey(Student,on_delete=models.DO_NOTHING) 
+    Month = models.ForeignKey(Month,on_delete=models.DO_NOTHING)
     Paid = models.BooleanField(default=False)
     pay_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):

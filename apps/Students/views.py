@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.Staffs.models import Staff
-from apps.Students.models.models import ClassRoutine, Day, ExamType, Fee, Notice, Result, Routine, Section
+from apps.Students.models.models import ClassRoutine, Day, ExamType, Fee, Month, Notice, Result, Routine, Section, StudentFee
 from apps.users.models import CustomUser,Course,Session_Year
 from apps.Students.models import Student,Class,ClassStudent,Attendance,Gender
 from datetime import date, datetime
@@ -578,5 +578,41 @@ def Delete_FEE(request,id=None):
             }
       return render(request,'Fees/addfee.html',context)
 
+@login_required(login_url='/')
+def SAVE_FEE(request,id=None):
+    fee = Fee.objects.all() 
+    classStudents=ClassStudent.objects.all()       
+    month=Month.objects.all()
+    feesStudents=StudentFee.objects.all()
+    if request.method == "POST":
+            Fee_id = request.POST.get('Fee_id')        
+            student_id = request.POST.get('student_id')
+            month_id = request.POST.get('month_id')
+            active = True if request.POST.get('active') is not None else False
 
-  
+       
+            feesStudent=StudentFee(
+            
+                Fee=Fee.objects.get(id=Fee_id),
+                Student=Student.objects.get(admin__id=student_id),
+                Month=Month.objects.get(id=month_id),
+                Paid=active,
+             
+            )
+            feesStudent.save()
+
+    context = {
+             'fee': fee,
+             'classStudents': classStudents,
+             'month': month,
+             'feesStudents':feesStudents
+            }
+    return render(request,'Fees/studentfees.html',context)
+
+@login_required(login_url='/')
+def delete_FEE(request,id=None):    
+    studentFee = StudentFee.objects.get(id = id)
+    studentFee.delete()
+    messages.success(request,'Record  Successfully Deleted !')
+    return redirect('SAVE_FEE')
+    

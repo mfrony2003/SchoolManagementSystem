@@ -41,6 +41,8 @@ urlpatterns = [
     #FEE
     path(r'ADD_FEE',ADD_FEE,name='ADD_FEE'),
     path(r'Delete_FEE/<int:id>',Delete_FEE,name='Delete_FEE'),
+    path(r'SAVE_FEE',SAVE_FEE,name='SAVE_FEE'),
+    path(r'delete_FEE/<int:id>',delete_FEE,name='delete_FEE'),
     
     
       

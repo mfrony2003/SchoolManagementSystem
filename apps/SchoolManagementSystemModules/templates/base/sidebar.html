@@ -42,12 +42,20 @@
                <a href="{% url 'VIEW_NOTICE'  %}"><i class="fas fa-book-reader"></i> <span>Notice Board </span></a>
                
             </li>
-            
-            <li>
-               <a href="{% url 'ADD_FEE'  %}"><i class="fas fa-money-check-alt"></i></i>
-                  <span> FEE  </span></a>
-               
-            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-money-check-alt"></i> <span> Fee</span> <span class="menu-arrow"></span></a>
+               <ul>                   
+               <li>
+                  <a href="{% url 'ADD_FEE'  %}">
+                     <span> FEE  </span></a>
+                  
+               </li>
+                 <li><a href="{% url 'SAVE_FEE' %}">Student FEE</a></li>                   
+                 
+              
+               </ul>
+            </li>     
+    
 
           </ul>
        </div>

@@ -1,9 +1,6 @@
+
 from django.contrib import admin
-
-
-
-
-from .models import Student,Class,Attendance,ClassStudent,Section,Gender,Day,Routine,ClassRoutine,ExamType,Notice,Fee,StudentFee
+from .models import Student,Class,Attendance,ClassStudent,Section,Gender,Day,Routine,ClassRoutine,ExamType,Notice,Fee,StudentFee,Month
 # Register your models here.
 admin.site.register(Student)	
 admin.site.register(Class)	
@@ -18,3 +15,4 @@ admin.site.register(ExamType)
 admin.site.register(Notice)	
 admin.site.register(Fee)	
 admin.site.register(StudentFee)	
+admin.site.register(Month)	
