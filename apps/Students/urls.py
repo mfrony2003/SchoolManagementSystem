@@ -38,6 +38,9 @@ urlpatterns = [
     #notice
     path(r'VIEW_NOTICE',VIEW_NOTICE,name='VIEW_NOTICE'),
     path(r'VIEW_Select_NOTICE/<int:id>',VIEW_NOTICE,name='VIEW_Select_NOTICE'),
+    #FEE
+    path(r'ADD_FEE',ADD_FEE,name='ADD_FEE'),
+    path(r'Delete_FEE/<int:id>',Delete_FEE,name='Delete_FEE'),
     
     
       

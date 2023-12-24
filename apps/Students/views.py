@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.Staffs.models import Staff
-from apps.Students.models.models import ClassRoutine, Day, ExamType, Notice, Result, Routine, Section
+from apps.Students.models.models import ClassRoutine, Day, ExamType, Fee, Notice, Result, Routine, Section
 from apps.users.models import CustomUser,Course,Session_Year
 from apps.Students.models import Student,Class,ClassStudent,Attendance,Gender
 from datetime import date, datetime
@@ -550,3 +550,33 @@ def VIEW_NOTICE(request,id=None):
         
         }
         return render(request,'Notice/notice.html',context)
+
+@login_required(login_url='/')
+def ADD_FEE(request):
+        if request.method == "POST":
+            amount = request.POST.get('amount')        
+            description = request.POST.get('description')
+            fee = Fee(               
+                   amount = amount,
+                   description = description,
+                )
+            fee.save()
+        fee=Fee.objects.all()    
+        
+        context = {
+             'fee':fee,
+            }
+        return render(request,'Fees/addfee.html',context)
+
+@login_required(login_url='/')
+def Delete_FEE(request,id=None):
+      fee = Fee.objects.get(id = id)
+      fee.delete()
+      fee=Fee.objects.all()            
+      context = {
+             'fee':fee,
+            }
+      return render(request,'Fees/addfee.html',context)
+
+
+  

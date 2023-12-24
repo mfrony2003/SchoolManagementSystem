@@ -12,67 +12,81 @@
         <div class="card-body">
             <form  method="post"  >                
                 
-                <div class="container-fluid">                    
+                <div class="row">
+                    <div class="col-sm-12">
+                       <div class="card card-table">
+                          <div class="card-body">
+                             <div class="table-responsive">                                     
                     
-                    <fieldset>
-                        <legend>Notice List</legend>
-                        <table class="table tables-bordered" id="student-list">
+                   
+                
+                        <table id="table_id" class="table table-hover table-center mb-0 ">    
                         
                             <thead>
                                 <tr>
                                     <th class="text-ceter">SL # </th>
-                                    <th class="text-ceter">Class </th>
                                     <th class="text-ceter">Title </th>
                                     <th class="text-ceter"> Active</th>
+                                    <th class="text-ceter"> Show </th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for i in notice %} 
                                 <tr class="">
-                                       <td class="px-2 py-1"> <a href="{% url 'VIEW_Select_NOTICE' i.id   %}" > {{ forloop.counter }}</a></td> 
-                                    <td class="px-2 py-1">{{ i.classIns.name }}</td>
+                                    <td  class="px-2 py-1">  {{ forloop.counter }}</td>                                                                        
                                     <td class="px-2 py-1">{{ i.title }}  </td>
-                                    <td class="px-2 py-1">{{ i.active }}  </td>
-                                    
-                                    </td>
-                                    
+                                    <td class="px-2 py-1">{{ i.active }}  </td>  
+                                    <td class="px-2 py-1">
+                                     <div class="actions">
+                                    <a href="{% url 'VIEW_Select_NOTICE' i.id   %}" data-toggle="modal" data-target="#exampleModalLong_{{ forloop.counter }}" > 
+                                        <i class="fa fa-eye" aria-hidden="true"></i>
+
+                                         </a>
+                                      
+                                     </div>             </td>                      
                                 </tr>
+                                  <!-- Modal -->
+  <div class="modal fade" id="exampleModalLong_{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{i.title}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            {{i.description}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
                                 {% endfor %}
                             </tbody>
                         </table>
                         <div class="clear-fix py-3"></div>
-                    </fieldset>
-                    
+                             </div>
+                          </div>
+                       </div>
+                    </div>
                 </div>
+                
             </form>
         </div>
-        <div class="card-body">
-            <div class="container-fluid">                    
-                    
-                {% if selectedNotice %}
-                <fieldset>
-            
-                    <table class="table tables-bordered" id="student-list">
-                    
-                  
-                        <tbody>
-                            {% for i in selectedNotice %} 
-                            <tr class="">
-                                <td class="px-2 py-1"> {{ i.id }}</td>
-                                <td class="px-2 py-1">{{ i.description }}</td>                                
-                                <td class="px-2 py-1">
-                                    <img class="avatar-img rounded-circle img-thumbnail"  src="{% static  i.file %}" ></td>    
-                                
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <div class="clear-fix py-3"></div>
-                </fieldset>
-                {% endif %}
-            </div>
-        </div>
+       
+       
     </div>
+
+
+
+
+   
 </div>
+   
+
 {% endblock content %}  

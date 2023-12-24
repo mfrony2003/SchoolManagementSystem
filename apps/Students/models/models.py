@@ -136,3 +136,17 @@ class Result(models.Model):
     def __str__(self):
         return 'Result - '+ self.Course.name + self.ExamMark
     
+class Fee(models.Model):    
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField()   
+
+    def __str__(self):
+        return f"{self.amount} - {self.description}"
+    
+class StudentFee(models.Model):
+    Fee = models.ForeignKey(Fee,on_delete=models.DO_NOTHING)  
+    Student = models.ForeignKey(Student,on_delete=models.DO_NOTHING) 
+    Paid = models.BooleanField(default=False)
+    pay_date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.Student.admin.first_name} - {self.Fee.amount}"

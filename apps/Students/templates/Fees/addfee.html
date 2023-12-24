@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="row">
+   <div class="col-sm-12">
+      <div class="card">
+         <div class="card-body">
+            <form method="post" action="{% url 'ADD_FEE' %}" enctype="multipart/form-data">
+            <fieldset>
+               {% csrf_token %}
+                  <div class="col-12">
+                     <h5 class="form-title"><span>Add Fee</span></h5>
+                  </div>
+
+                  {% include 'common/messages.html' %}	
+
+             
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Fee Amount</label>
+                        <input type="text" class="form-control" name="amount" required>
+                     </div>
+                  </div>
+                  <div class="col-sm-11">
+                     <div class="form-group">
+                        <label>Description </label>
+                        <input type="text" class="form-control" name="description" required>
+                     </div>
+                  </div>
+                  
+                 
+               <br>
+              
+                  <div class="col-12">
+                     <button type="submit" class="btn btn-primary" >Add Fees</button>
+                  </div>
+            </fieldset>
+
+            <fieldset>
+                    <legend>Fee List</legend>
+                    <div class="card-body">
+                        <div class="container-fluid">
+                            <table id="table_id" class="table table-hover table-center mb-0 ">
+                                
+                                <colgroup>
+                                    <col width="5%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                    <col width="20%">                                    
+                                </colgroup>
+                                <thead>
+                                    <tr class="bg-gradient bg-opacity-50 ">
+                                        <th class="px-2 py-2 text-center">#</th>
+                                        <th class="px-2 py-2 text-center">Amount</th>
+                                        <th class="px-2 py-2 text-center">Description</th>                                       
+                                        <th class="px-2 py-2 text-center">Action</th>                                       
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for f in fee %}
+                                    <tr>
+                                        <td  class="px-2 py-1 align-middle text-center">{{ f.id }}</td>
+                                        <td  class="px-2 py-1 align-middle text-center">{{ f.amount }}</td>
+                                        <td  class="px-2 py-1 align-middle text-center">{{ f.description }}</td>    
+                                        <td class="px-2 py-1 align-middle text-center"><div class="actions">
+                                          <a class="btn btn-sm bg-danger-light" data-toggle="modal" data-target="#exampleModal_{{ f.id }}">      
+                                             <i class="fas fa-trash"></i>
+                                             </a>
+                                          
+                                        
+                                       </div>                                    </td>
+                                    </tr>
+                                   
+                                    <div class="modal fade" id="exampleModal_{{ f.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog" role="document">
+                                         <div class="modal-content">
+                                           <div class="modal-header">
+                                             <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                               <span aria-hidden="true">&times;</span>
+                                             </button>
+                                           </div>
+                                           <div class="modal-body">
+                                             Are you Sure ?
+                                           </div>
+                                           <div class="modal-footer">                                                           
+                                             <a class="btn btn-secondary" data-dismiss="modal" >No</a>
+                                             <a class="btn btn-primary" href="{% url 'Delete_FEE' f.id %}">Yes</a>
+                                           </div>
+                                         </div>
+                                       </div>
+                                     </div>
+
+                                   {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                  
+            </fieldset>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}	
