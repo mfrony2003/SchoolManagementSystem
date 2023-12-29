@@ -29,6 +29,11 @@ def ADD_STAFF(request):
         password = request.POST.get('password')
         address = request.POST.get('address')
         gender = request.POST.get('gender')
+        staff_dob=request.POST.get('staff_dob')
+        staff_religion=request.POST.get('staff_religion')
+        staff_nid=request.POST.get('staff_nid')
+        staff_ph_no=request.POST.get('staff_ph_no')
+        staff_emg_ph_no=request.POST.get('staff_emg_ph_no')
         
         if CustomUser.objects.filter(email=email).exists():
            messages.warning(request,'Email Already Exists')
@@ -44,6 +49,7 @@ def ADD_STAFF(request):
                 email = email,
                 profile_pic = profile_pic,
                 user_type = 2
+                
             )
             user.set_password(password)
             user.save()
@@ -53,6 +59,11 @@ def ADD_STAFF(request):
                 admin = user,
                 address = address,                
                 gender = gender,
+                dob = staff_dob,
+                religion= staff_religion,
+                nid_number= staff_nid,
+                phone_personal= staff_ph_no,
+                phone_emergengy= staff_emg_ph_no
             )
             staff.save()
             messages.success(request, user.first_name + "  " + user.last_name + " Added Successfully  !")
@@ -101,7 +112,7 @@ def EDIT_STAFF(request,id):
     gender=Gender.objects.all()
     current_gender=staff.first().gender_id
     context = {
-        'staff':staff,
+        'staff':staff.first(),
         'gender':gender,
         'current_gender':current_gender,
 
@@ -121,9 +132,13 @@ def UPDATE_STAFF(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         address = request.POST.get('address')
-        gender = request.POST.get('gender')
-        course_id = request.POST.get('course_id')
-        session_year_id = request.POST.get('session_year_id')
+        gender_id = request.POST.get('gender_id')
+        staff_dob=request.POST.get('staff_dob')
+        staff_religion=request.POST.get('staff_religion')
+        staff_nid=request.POST.get('staff_nid')
+        staff_ph_no=request.POST.get('staff_ph_no')
+        staff_emg_ph_no=request.POST.get('staff_emg_ph_no')
+        
 
         user = CustomUser.objects.get(id = staff_id)
 
@@ -140,7 +155,13 @@ def UPDATE_STAFF(request):
 
         staff = Staff.objects.get(admin = staff_id)
         staff.address = address
-        staff.gender = gender
+        staff.gender =  Gender.objects.get(id = gender_id) 
+        staff.dob=request.POST.get('staff_dob')
+        staff.religion=request.POST.get('staff_religion')
+        staff.nid_number =request.POST.get('staff_nid')
+        staff.phone_personal=request.POST.get('staff_ph_no')
+        staff.phone_emergengy=request.POST.get('staff_emg_ph_no')
+        
 
         
         

@@ -7,6 +7,11 @@ from apps.users.models.models import CustomUser, Gender
 class Staff(models.Model):
     admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     address = models.TextField()
+    dob= models.DateField(blank=True, null= True)
+    religion= models.CharField(max_length=250,blank=True, null= True)
+    nid_number= models.CharField(max_length=250,blank=True, null= True)
+    phone_personal= models.CharField(max_length=250,blank=True, null= True)
+    phone_emergengy= models.CharField(max_length=250,blank=True, null= True)
     gender = models.ForeignKey(Gender,on_delete=models.DO_NOTHING)  
     active= models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)

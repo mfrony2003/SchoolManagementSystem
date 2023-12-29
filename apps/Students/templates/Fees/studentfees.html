@@ -103,9 +103,14 @@
                                             <td  class="px-2 py-1 align-middle text-center">{{ feesStudent.id }}</td>
                                             <td  class="px-2 py-1 align-middle text-center">{{ feesStudent.Student.admin.first_name }}</td>
                                             <td  class="px-2 py-1 align-middle text-center">{{ feesStudent.Fee.amount }}</td>
-                                            <td  class="px-2 py-1 align-middle text-center">{{ feesStudent.Month.name }}</td>
-
-                                            <td  class="px-2 py-1 align-middle text-center">{{ feesStudent.Paid}}</td>                                            
+                                            <td  class="px-2 py-1 align-middle text-center"> {{feesStudent.Month.name}}</td>
+                                        
+     
+                                            <td  class="px-2 py-1 align-middle text-center">     {% if feesStudent.Paid == False %}
+                                                NO
+                                                {% else %}
+                                                YES
+                                        {% endif %}</td>                                            
                                             <td  class="px-2 py-1 align-middle text-center"> <a class="btn btn-sm bg-danger-light" data-toggle="modal" data-target="#exampleModal_{{ feesStudent.id }}">      
                                                 <i class="fas fa-trash"></i>
                                                 </a>                                     

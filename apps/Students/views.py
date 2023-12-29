@@ -32,9 +32,12 @@ def ADD_STUDENT(request):
         address = request.POST.get('address')
         gender_id = request.POST.get('gender_id')        
         class_id = request.POST.get('class_id')
-        session_year_id = request.POST.get('session_year_id')
-        student_code = request.POST.get('student_code')
-
+        session_year_id = request.POST.get('session_year_id')      
+        student_dob = request.POST.get('student_dob')
+        student_religion = request.POST.get('student_religion')
+        student_birth_no = request.POST.get('student_birth_no')
+        student_gur_ph_no = request.POST.get('student_gur_ph_no')
+        student_ph_no = request.POST.get('student_ph_no')
         if CustomUser.objects.filter(email=email).exists():
            messages.warning(request,'Email Already Exists')
            return redirect('add_student')
@@ -61,10 +64,15 @@ def ADD_STUDENT(request):
                 admin = user,
                 address = address,
                 session_year_id = session_year,
-                student_code = student_code,
+                
                 student_class = studentClass,
                 student_roll=student_roll,
                 gender = gender,
+                dob=student_dob,
+                religion =student_religion ,
+                bith_indentificaion_number =student_birth_no ,
+                phone_guardian =student_gur_ph_no ,
+                phone_student =student_ph_no ,
             )
             student.save()
             classStudent= ClassStudent(
@@ -113,7 +121,7 @@ def VIEW_STUDENT(request):
 
 @login_required(login_url='/')
 def EDIT_STUDENT(request,id):
-    student = Student.objects.filter(id = id)   
+    student = Student.objects.filter(id = id)
     session_year = Session_Year.objects.all()
     student_class=Class.objects.all()
     gender=Gender.objects.all()
@@ -123,7 +131,7 @@ def EDIT_STUDENT(request,id):
 
 
     context = {
-        'student':student,        
+        'student':student.first(),        
         'session_year':session_year,        
         'session_year_id':student.first().session_year_id_id,
         'student_class':student_class,
@@ -137,8 +145,7 @@ def EDIT_STUDENT(request,id):
 @login_required(login_url='/')
 def UPDATE_STUDENT(request):
     if request.method == "POST":
-        student_id = request.POST.get('student_id')
-        print(student_id)
+        student_id = request.POST.get('student_id')      
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -147,7 +154,12 @@ def UPDATE_STUDENT(request):
         password = request.POST.get('password')
         address = request.POST.get('address')        
         gender_id = request.POST.get('gender_id')        
-        student_code=request.POST.get('student_code')
+       
+        student_dob = request.POST.get('student_dob')
+        student_religion = request.POST.get('student_religion')
+        student_birth_no = request.POST.get('student_birth_no')
+        student_gur_ph_no = request.POST.get('student_gur_ph_no')
+        student_ph_no = request.POST.get('student_ph_no')
         session_year_id = request.POST.get('session_year_id')
         class_id = request.POST.get('class_id')
         user = CustomUser.objects.get(id = student_id)
@@ -166,8 +178,12 @@ def UPDATE_STUDENT(request):
         student = Student.objects.get(admin = student_id)
         student.address = address        
         student.student_code=student_code
-
-        
+        student.dob=student_dob 
+        student.religion=student_religion 
+        student.bith_indentificaion_number=student_birth_no 
+        student.phone_guardian= student_gur_ph_no 
+        student.phone_student=student_ph_no 
+       
         
         classID = Class.objects.get(id = class_id)
         student.student_class = classID

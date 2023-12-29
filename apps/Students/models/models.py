@@ -38,7 +38,12 @@ class Notice(models.Model):
 # Create Student Model
 class Student(models.Model):
     admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    student_code = models.CharField(max_length=250,blank=True, null= True)    
+    student_code = models.CharField(max_length=250,blank=True, null= True)   
+    dob= models.DateField(blank=True, null= True)
+    religion= models.CharField(max_length=250,blank=True, null= True)
+    bith_indentificaion_number= models.CharField(max_length=250,blank=True, null= True)
+    phone_guardian= models.CharField(max_length=250,blank=True, null= True)
+    phone_student= models.CharField(max_length=250,blank=True, null= True)
     student_roll = models.CharField(max_length=250,blank=True, null= True)    
     student_class = models.ForeignKey(Class,on_delete=models.DO_NOTHING)
     address = models.TextField()    
