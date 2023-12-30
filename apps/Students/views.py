@@ -9,6 +9,8 @@ from apps.Students.models import Student,Class,ClassStudent,Attendance,Gender
 from datetime import date, datetime
 from django.contrib import messages
 
+from apps.users.models.models import Religion
+
 context = {
     'page_title' : 'Simple Blog Site',
     'deparment_list' : [],
@@ -20,6 +22,7 @@ def ADD_STUDENT(request):
     student_class=Class.objects.all()
     session_year = Session_Year.objects.all()
     gender=Gender.objects.all()
+    religion=Religion.objects.all()
 
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
@@ -34,7 +37,7 @@ def ADD_STUDENT(request):
         class_id = request.POST.get('class_id')
         session_year_id = request.POST.get('session_year_id')      
         student_dob = request.POST.get('student_dob')
-        student_religion = request.POST.get('student_religion')
+        religion_id = request.POST.get('religion_id')
         student_birth_no = request.POST.get('student_birth_no')
         student_gur_ph_no = request.POST.get('student_gur_ph_no')
         student_ph_no = request.POST.get('student_ph_no')
@@ -59,6 +62,7 @@ def ADD_STUDENT(request):
             studentClass = Class.objects.get(id=class_id)
             session_year = Session_Year.objects.get(id=session_year_id)
             gender=Gender.objects.get(id=gender_id)
+            religion=Religion.objects.get(id=religion_id)
 
             student = Student(
                 admin = user,
@@ -69,7 +73,7 @@ def ADD_STUDENT(request):
                 student_roll=student_roll,
                 gender = gender,
                 dob=student_dob,
-                religion =student_religion ,
+                religion =religion ,
                 bith_indentificaion_number =student_birth_no ,
                 phone_guardian =student_gur_ph_no ,
                 phone_student =student_ph_no ,
@@ -90,6 +94,7 @@ def ADD_STUDENT(request):
         'session_year':session_year,
         'student_class':student_class,
         'gender':gender,
+        'religion':religion,
     }
 
     return render(request,'Student/add_student.html',context)
@@ -97,19 +102,24 @@ def ADD_STUDENT(request):
 @login_required(login_url='/')
 def VIEW_STUDENT(request):
       
-    if request.user.user_type == '1':        
+    if request.user.user_type == '1':      
+        
         student_class=Class.objects.all()
         students = Student.objects.all()
+        page='Student/view_student_admin.html'
         
-    if request.user.user_type == '2':                     
+        
+    if request.user.user_type == '2':    
+        
         student_class=Class.objects.get(
-                assigned_faculty__admin__id = request.user.id)
+                assigned_faculty__admin__id = request.user.id)        
         students = Student.objects.filter(
                 id__in = ClassStudent.objects.filter(
                 classIns = student_class).values_list('student')).all()
+        page='Student/view_student_staff.html'
 
     
-
+        
 
     gender=Gender.objects.all()
     context = {
@@ -117,7 +127,9 @@ def VIEW_STUDENT(request):
         'student_class':student_class,
         'gender':gender,
     }
-    return render(request,'Student/view_student.html',context)
+    
+  
+    return render(request,page,context)
 
 @login_required(login_url='/')
 def EDIT_STUDENT(request,id):
@@ -125,7 +137,9 @@ def EDIT_STUDENT(request,id):
     session_year = Session_Year.objects.all()
     student_class=Class.objects.all()
     gender=Gender.objects.all()
+    religion=Religion.objects.all()
     current_gender=student.first().gender_id
+    current_religion=student.first().religion_id
     current_session_year=student.first().session_year_id
     current_class=student.first().student_class_id
 
@@ -139,6 +153,8 @@ def EDIT_STUDENT(request,id):
         'current_gender':current_gender,
         'current_session_year':current_session_year,
         'current_class':current_class,
+        'religion':religion,
+        'current_religion':current_religion
     }
     return render(request,'Student/edit_student.html',context)
 
@@ -156,7 +172,7 @@ def UPDATE_STUDENT(request):
         gender_id = request.POST.get('gender_id')        
        
         student_dob = request.POST.get('student_dob')
-        student_religion = request.POST.get('student_religion')
+        religion_id = request.POST.get('religion_id')
         student_birth_no = request.POST.get('student_birth_no')
         student_gur_ph_no = request.POST.get('student_gur_ph_no')
         student_ph_no = request.POST.get('student_ph_no')
@@ -176,10 +192,9 @@ def UPDATE_STUDENT(request):
         user.save()
 
         student = Student.objects.get(admin = student_id)
-        student.address = address        
-        student.student_code=student_code
+        student.address = address                
         student.dob=student_dob 
-        student.religion=student_religion 
+        student.religion= Religion.objects.get(id = religion_id) 
         student.bith_indentificaion_number=student_birth_no 
         student.phone_guardian= student_gur_ph_no 
         student.phone_student=student_ph_no 

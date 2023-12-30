@@ -3,7 +3,7 @@ from django.db import models
 from apps.Staffs.models import Staff
 
 from apps.users.models import CustomUser,Session_Year
-from apps.users.models.models import Course, Gender, Section
+from apps.users.models.models import Course, Gender, Religion, Section
 
 # Create your models here.
 
@@ -40,7 +40,7 @@ class Student(models.Model):
     admin = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     student_code = models.CharField(max_length=250,blank=True, null= True)   
     dob= models.DateField(blank=True, null= True)
-    religion= models.CharField(max_length=250,blank=True, null= True)
+    religion= models.ForeignKey(Religion,on_delete=models.DO_NOTHING)       
     bith_indentificaion_number= models.CharField(max_length=250,blank=True, null= True)
     phone_guardian= models.CharField(max_length=250,blank=True, null= True)
     phone_student= models.CharField(max_length=250,blank=True, null= True)

@@ -14,12 +14,13 @@ from apps.users.models import CustomUser
 
 from django.contrib import messages
 
-from apps.users.models.models import Gender
+from apps.users.models.models import Gender, Religion
 
 
 @login_required(login_url='/')
 def ADD_STAFF(request):    
     gender=Gender.objects.all()
+    religion=Religion.objects.all()
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
         first_name = request.POST.get('first_name')
@@ -28,7 +29,8 @@ def ADD_STAFF(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         address = request.POST.get('address')
-        gender = request.POST.get('gender')
+        gender_id = request.POST.get('gender_id')
+        religion_id = request.POST.get('religion_id')
         staff_dob=request.POST.get('staff_dob')
         staff_religion=request.POST.get('staff_religion')
         staff_nid=request.POST.get('staff_nid')
@@ -53,14 +55,16 @@ def ADD_STAFF(request):
             )
             user.set_password(password)
             user.save()
-            
+
+            gender=Gender.objects.get(id=gender_id)
+            religion=Religion.objects.get(id=religion_id)
 
             staff = Staff(
                 admin = user,
                 address = address,                
                 gender = gender,
                 dob = staff_dob,
-                religion= staff_religion,
+                religion=  religion ,
                 nid_number= staff_nid,
                 phone_personal= staff_ph_no,
                 phone_emergengy= staff_emg_ph_no
@@ -74,6 +78,7 @@ def ADD_STAFF(request):
 
     context = {        
         'gender':gender,
+        'religion':religion,
     }
 
     return render(request,'Staff/add_staff.html',context)
@@ -110,11 +115,15 @@ def VIEW_STAFF(request):
 def EDIT_STAFF(request,id):
     staff = Staff.objects.filter(id = id)    
     gender=Gender.objects.all()
+    religion=Religion.objects.all()
+    current_religion=staff.first().religion_id
     current_gender=staff.first().gender_id
     context = {
         'staff':staff.first(),
         'gender':gender,
+        'religion':religion,
         'current_gender':current_gender,
+        'current_religion':current_religion,
 
         
     }
@@ -134,7 +143,7 @@ def UPDATE_STAFF(request):
         address = request.POST.get('address')
         gender_id = request.POST.get('gender_id')
         staff_dob=request.POST.get('staff_dob')
-        staff_religion=request.POST.get('staff_religion')
+        religion_id=request.POST.get('religion_id')
         staff_nid=request.POST.get('staff_nid')
         staff_ph_no=request.POST.get('staff_ph_no')
         staff_emg_ph_no=request.POST.get('staff_emg_ph_no')
@@ -156,11 +165,11 @@ def UPDATE_STAFF(request):
         staff = Staff.objects.get(admin = staff_id)
         staff.address = address
         staff.gender =  Gender.objects.get(id = gender_id) 
-        staff.dob=request.POST.get('staff_dob')
-        staff.religion=request.POST.get('staff_religion')
-        staff.nid_number =request.POST.get('staff_nid')
-        staff.phone_personal=request.POST.get('staff_ph_no')
-        staff.phone_emergengy=request.POST.get('staff_emg_ph_no')
+        staff.dob=staff_dob
+        staff.religion=Religion.objects.get(id = religion_id)   
+        staff.nid_number =staff_nid
+        staff.phone_personal=staff_ph_no
+        staff.phone_emergengy=staff_emg_ph_no
         
 
         
